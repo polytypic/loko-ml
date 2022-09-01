@@ -1,0 +1,17 @@
+opam-version: "2.0"
+version: "0.1.0"
+synopsis: "Lower-Kinded Optics for OCaml"
+maintainer: "Vesa Karvonen <vesa.a.j.k@gmail.com>"
+authors: "Vesa Karvonen"
+license: "MIT"
+homepage: "https://github.com/polytypic/loko-ml"
+bug-reports: "https://github.com/polytypic/loko-ml/issues"
+dev-repo: "git+https://github.com/polytypic/loko-ml.git"
+depends: [
+  "dune" {>= "3.3.0"}
+  "ocaml" {>= "4.08.0"}
+  "ppx_optcomp" {>= "v0.14.0"}
+  "ocamlformat" {= "0.23.0" & with-test}
+  "odoc" {>= "2.1.1" & with-doc}
+]
+build: ["dune" "build" "-p" name "-j" jobs]

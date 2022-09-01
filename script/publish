@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# shellcheck source=common
+. "${BASH_SOURCE%/*}/common"
+
+main() {
+  clone-repo
+  build-and-test
+  publish-docs
+  cleanup
+}
+
+clone-repo() {
+  mkdir tmp
+  cd tmp
+
+  git clone $GIT
+  cd $NAME
+}
+
+build-and-test() {
+  CI=true script/ci
+}
+
+publish-docs() {
+  git checkout -b gh-pages
+
+  rm docs/.gitignore
+
+  cp -r $DOCS/* docs/
+
+  git add docs
+  git commit -m 'Built GitHub pages'
+  git push -f -u origin gh-pages
+}
+
+cleanup() {
+  cd ../..
+  rm -rf tmp
+}
+
+main
