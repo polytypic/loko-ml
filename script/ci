@@ -1,0 +1,104 @@
+#!/bin/bash
+
+# shellcheck source=common
+. "${BASH_SOURCE%/*}/common"
+
+export OCAMLRUNPARAM=b
+
+main() {
+  local TEST_DIR=src/test/$LIB/
+
+  extract-test-from-readme
+  extract-test-from-signature
+  generate-build-files
+  build-and-test
+  if [ "$CI" = true ]; then
+    PROFILE='' build-and-test
+    clean
+  fi
+  PROFILE=release build-and-test
+  build-docs
+  check-git-clean
+}
+
+extract-test-from-readme() {
+  update-file-content \
+    "$TEST_DIR/Introduction.ml" \
+    "(* DO NOT EDIT! THIS IS AUTO EXTRACTED FROM THE README. *)
+
+[@@@ocaml.warning \"-8\"] (* Disable non-exhaustive match warning. *)
+
+$(awk 'BEGIN {out=0}
+      /^```ocaml$/ {out=1}
+      /^```$/ {out=0}
+      /^[^`].*/ {if (out) print $0}' < README.md \
+  | (cd "$TEST_DIR" && opam exec -- ocamlformat --impl -))
+
+(* DO NOT EDIT! THIS IS AUTO EXTRACTED FROM THE README. *)"
+}
+
+extract-test-from-signature() {
+  update-file-content \
+    "$TEST_DIR/Signature.ml" \
+    "(* DO NOT EDIT! THIS IS AUTO EXTRACTED FROM THE SIGNATURE. *)
+
+[@@@ocaml.warning \"-8\"] (* Disable non-exhaustive match warning. *)
+[@@@ocaml.warning \"-32\"] (* Disable unused value warning. *)
+
+$(awk 'BEGIN {out=0}
+      /^{\[$/ {out=1}
+      /^\]}/ {out=0}
+      /^[^{\]].*/ {if (out) print $0}' < src/main/$LIB/$LIB.mli \
+  | (cd "$TEST_DIR" && opam exec -- ocamlformat --impl -))
+
+(* DO NOT EDIT! THIS IS AUTO EXTRACTED FROM THE SIGNATURE. *)"
+}
+
+generate-build-files() {
+  update-file-content dune-project '(lang dune 3.3)'
+
+  local TEST_FILES
+  TEST_FILES=$(cd $TEST_DIR && echo *.ml)
+
+  update-file-content \
+    "$TEST_DIR/dune" \
+    "(tests
+ (names ${TEST_FILES//.ml/})
+ (libraries $LIB))"
+}
+
+build-and-test() {
+  OPTS=(--root=.)
+
+  if [ -n "$PROFILE" ]; then
+     OPTS+=(--profile "$PROFILE")
+  fi
+
+  folded "Building" \
+    opam exec -- dune build "${OPTS[@]}"
+
+  folded "Testing" \
+    opam exec -- dune test "${OPTS[@]}"
+}
+
+clean() {
+  folded "Cleaning" \
+    opam exec -- dune clean
+}
+
+build-docs() {
+  folded "Build docs" \
+    opam exec -- dune build @doc --root=.
+}
+
+check-git-clean() {
+  if [ "$CI" = true ]; then
+    if [[ $(git status --porcelain) ]] ; then
+      git status
+      git diff
+      exit 1
+    fi
+  fi
+}
+
+main

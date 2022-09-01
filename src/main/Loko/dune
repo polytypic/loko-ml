@@ -1,0 +1,4 @@
+(library
+ (name Loko)
+ (public_name loko)
+ (preprocess (pps ppx_optcomp)))

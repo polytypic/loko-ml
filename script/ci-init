@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# shellcheck source=common
+. "${BASH_SOURCE%/*}/common"
+
+update-file-content dune-project '(lang dune 3.3)'
