@@ -1,0 +1,4 @@
+(mdx
+ (package loko)
+ (libraries loko)
+ (files README.md))

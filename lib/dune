@@ -1,0 +1,8 @@
+(library
+ (name loko)
+ (public_name loko))
+
+(mdx
+ (package loko)
+ (libraries loko)
+ (files loko.mli))
