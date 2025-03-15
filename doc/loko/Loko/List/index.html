@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>List (loko.Loko.List)</title><meta charset="utf-8"/><link rel="stylesheet" href="../../../odoc.support/odoc.css"/><meta name="generator" content="odoc 2.4.4"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../../../odoc.support/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script><script>let base_url = '../../../';
+let search_urls = ['../../db.js','../../../sherlodoc.js'];
+</script><script src="../../../odoc.support/odoc_search.js" defer="defer"></script></head><body class="odoc"><nav class="odoc-nav"><a href="../index.html">Up</a> – <a href="../../index.html">loko</a> &#x00BB; <a href="../index.html">Loko</a> &#x00BB; List</nav><div class="odoc-search"><div class="search-inner"><input class="search-bar" placeholder="🔎 Search..."/><div class="search-snake"></div><div class="search-result"></div></div></div><header class="odoc-preamble"><h1>Module <code><span>Loko.List</span></code></h1></header><div class="odoc-content"><div class="odoc-spec"><div class="spec value anchored" id="val-hd"><a href="#val-hd" class="anchor"></a><code><span><span class="keyword">val</span> hd : <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span class="type-var">'F</span>, <span class="type-var">'F</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span> <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>A prism that focuses on the first removable element of a list.</p><pre class="language-ocaml"><code># L.view_opt L.List.hd []
+- : 'a option = None
+
+# L.view L.List.hd [ 3; 1; 4 ]
+- : int = 3
+
+# L.over L.List.hd ( ~- ) [ 3; 1; 4 ]
+- : int list = [-3; 1; 4]
+
+# L.remove L.List.hd [ 3; 1; 4 ]
+- : int list = [1; 4]</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-tl"><a href="#val-tl" class="anchor"></a><code><span><span class="keyword">val</span> tl : 
+  <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span>
+    <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>A prism that focuses on the removable tail of a list.</p><pre class="language-ocaml"><code># L.view_opt L.List.tl []
+- : 'a list option = None
+
+# L.view L.List.tl [ 3; 1; 4 ]
+- : int list = [1; 4]
+
+# L.over L.List.tl List.rev [ 3; 1; 4 ]
+- : int list = [3; 4; 1]
+
+# L.remove L.List.tl [ 3; 1; 4 ]
+- : int list = [3]</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-map"><a href="#val-map" class="anchor"></a><code><span><span class="keyword">val</span> map : 
+  <span><span><span>(<span class="type-var">'S</span>, <span class="type-var">'F</span>, <span class="type-var">'G</span>, <span class="type-var">'T</span>)</span> <a href="../index.html#type-optic">optic</a></span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(<span><span class="type-var">'S</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'T</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span>
+    <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>An isomorphism between lists.</p></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-elems"><a href="#val-elems" class="anchor"></a><code><span><span class="keyword">val</span> elems : <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span class="type-var">'F</span>, <span class="type-var">'G</span>, <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span> <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>A traversal over the removable elements of a list.</p></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-as_array"><a href="#val-as_array" class="anchor"></a><code><span><span class="keyword">val</span> as_array : <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> array</span>, <span><span class="type-var">'G</span> array</span>, <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span> <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>Isomorphism between lists and arrays.</p></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-as_option"><a href="#val-as_option" class="anchor"></a><code><span><span class="keyword">val</span> as_option : 
+  <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> option</span>, <span><span class="type-var">'G</span> option</span>, <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span> <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>Isomorphism between singleton lists and options.</p><pre class="language-ocaml"><code># L.view L.List.as_option [ &quot;more&quot;; &quot;than&quot;; &quot;one&quot; ]
+- : string option = None
+
+# L.view L.List.as_option [ &quot;exactly one&quot; ]
+- : string option = Some &quot;exactly one&quot;
+
+# L.view L.List.as_option []
+- : 'a option = None</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-as_rev"><a href="#val-as_rev" class="anchor"></a><code><span><span class="keyword">val</span> as_rev : 
+  <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span>
+    <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>An isomorphism whose focus is reverse of the list.</p><pre class="language-ocaml"><code># L.over L.List.as_rev (List.cons 4) [ 3; 1 ]
+- : int list = [3; 1; 4]</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-partition"><a href="#val-partition" class="anchor"></a><code><span><span class="keyword">val</span> partition : 
+  <span><span>(<span><span class="type-var">'F</span> <span class="arrow">&#45;&gt;</span></span> bool)</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>,
+    <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span> * <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>,
+    <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span> * <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>,
+    <span><span class="type-var">'G</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span>
+    <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>An isomorphism that partitions a list into sublists of passes and fails.</p><pre class="language-ocaml"><code># L.view (L.List.partition (fun x -&gt; x &lt;= 2)) [ 3; 1; 4; 2; 5 ]
+- : int list * int list = ([1; 2], [3; 4; 5])</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-filter"><a href="#val-filter" class="anchor"></a><code><span><span class="keyword">val</span> filter : 
+  <span><span>(<span><span class="type-var">'F</span> <span class="arrow">&#45;&gt;</span></span> bool)</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span>
+    <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>A lens that focuses on sublist of passes.</p><pre class="language-ocaml"><code># L.view (L.List.filter (fun x -&gt; x &lt;= 2)) [ 3; 1; 4; 2; 5 ]
+- : int list = [1; 2]</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-reject"><a href="#val-reject" class="anchor"></a><code><span><span class="keyword">val</span> reject : 
+  <span><span>(<span><span class="type-var">'F</span> <span class="arrow">&#45;&gt;</span></span> bool)</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(<span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>, <span><span class="type-var">'F</span> <span class="xref-unresolved">Stdlib</span>.List.t</span>)</span>
+    <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>A lens that focuses on sublist of fails.</p><pre class="language-ocaml"><code># L.view (L.List.reject (fun x -&gt; x &lt;= 2)) [ 3; 1; 4; 2; 5 ]
+- : int list = [3; 4; 5]</code></pre></div></div></div></body></html>
