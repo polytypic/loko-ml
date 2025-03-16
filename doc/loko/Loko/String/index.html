@@ -12,7 +12,7 @@ let search_urls = ['../../db.js','../../../sherlodoc.js'];
     <span><span class="xref-unresolved">Stdlib</span>.String.t list</span>,
     <span class="xref-unresolved">Stdlib</span>.String.t)</span>
     <a href="../index.html#type-optic">optic</a></span></span></code></div><div class="spec-doc"><p>An isomorphism between separated string and list of strings.</p><pre class="language-ocaml"><code># L.over
-    (L.String.split_on_char ':' ^&lt;&lt; L.List.elems)
+    (L.String.split_on_char ':' % L.List.elems)
     String.capitalize_ascii &quot;one:two:three&quot;
 - : string = &quot;One:Two:Three&quot;</code></pre></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-starts_with"><a href="#val-starts_with" class="anchor"></a><code><span><span class="keyword">val</span> starts_with : 
   <span><span class="xref-unresolved">Stdlib</span>.String.t <span class="arrow">&#45;&gt;</span></span>
